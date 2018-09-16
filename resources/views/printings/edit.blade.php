@@ -53,7 +53,7 @@
                                     <tbody>
                                     @foreach($documents as $key => $document)
                                         <tr>
-                                            <th scope="row">{{$key}}</th>
+                                            <th scope="row">{{$key+1}}</th>
                                             <td>{{basename($document)}}</td>
                                             <td><a class="btn btn-primary btn-sm" href="{{asset("storage/".$document)}}" target="_blank">Show</a></td>
                                             <td>
