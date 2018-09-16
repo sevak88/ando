@@ -108,6 +108,7 @@ class PrintingController extends Controller
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
 
+        arsort($documents);
         return view("printings.edit", [
             "printing" => $printing,
             "documents" => $documents,
@@ -131,7 +132,7 @@ class PrintingController extends Controller
       //  dump($request->get("document"));
        // dd($printing->folder."/text.jpg");
         try{
-            Storage::copy($request->get("document"), "public/prints/".$printing->folder."/".basename($request->get("document")));
+            Storage::copy($request->get("document"), "public/prints/".$printing->folder."/".time()."_".basename($request->get("document")));
         }catch (\Exception $e){
             return redirect()->back()->withErrors([$e->getMessage()]);
         }

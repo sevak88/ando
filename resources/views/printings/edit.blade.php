@@ -85,17 +85,30 @@
     <script>
         $( document ).ready(function() {
 
+            $(".typeahead").on('keypress', function (e) {
+                if (e.keyCode === 13) {
+                    e.preventDefault()
+                    return false;
+                }
+            });
+
 
 
             $('.typeahead').typeahead({
                 items: 100,
+                selectOnBlur: false,
+                changeInputOnSelect: true,
                 source: [
                     @foreach($files as $file)
                     "{{$file}}",
                     @endforeach
                 ]
-            })
-            $(".typeahead").on("keyup", function (e) {
+            });
+
+
+
+
+            $(".form-control").on("keyup", function (e) {
                 $(this).val($(this).val().replace(/\//g,''))
             })
         });
