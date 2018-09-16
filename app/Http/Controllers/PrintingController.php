@@ -102,7 +102,7 @@ class PrintingController extends Controller
         $printing = Printing::findOrFail($id);
         try {
             $documents = Storage::disk("public")->files(Printing::$discPathName . "/" . $printing->folder);
-            $files = Storage::disk("local")->allFiles();
+            $files = Storage::disk("local")->allFiles("files");
             $logs = Storage::disk("public")->get(Printing::$discPathName . "/" . $printing->folder . "/logs/logs.txt");
         }catch (\Exception $e){
             return redirect()->back()->withErrors([$e->getMessage()]);
