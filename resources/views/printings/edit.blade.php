@@ -85,12 +85,7 @@
     <script>
         $( document ).ready(function() {
 
-            $(".typeahead").on('keypress', function (e) {
-                if (e.keyCode === 13) {
-                    e.preventDefault()
-                    return false;
-                }
-            });
+
 
 
 
@@ -109,6 +104,7 @@
 
 
             $(".form-control").on("keyup", function (e) {
+
                 $(this).val($(this).val().replace(/\//g,''))
             })
         });
