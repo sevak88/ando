@@ -51,9 +51,12 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($documents as $key => $document)
+                                    @php
+                                    $cntr = $documents->count();
+                                    @endphp
+                                    @foreach($documents as  $document)
                                         <tr>
-                                            <th scope="row">{{$key+1}}</th>
+                                            <th scope="row">{{$cntr--}}</th>
                                             <td>{{basename($document)}}</td>
                                             <td><a class="btn btn-primary btn-sm" href="{{asset("storage/".$document)}}" target="_blank">Show</a></td>
                                             <td>

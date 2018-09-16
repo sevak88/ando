@@ -6,6 +6,7 @@ use App\Printing;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -101,14 +102,24 @@ class PrintingController extends Controller
 
         $printing = Printing::findOrFail($id);
         try {
-            $documents = Storage::disk("public")->files(Printing::$discPathName . "/" . $printing->folder);
+
+            $documents = collect(File::allFiles(storage_path("app/public/prints/".$printing->folder)))->filter(function ($file) {
+                return in_array($file->getExtension(), ['png', 'gif', 'jpg', 'jpeg']);
+            })
+                ->sortBy(function ($file) {
+                    return $file->getCTime();
+                },null, true)
+                ->map(function ($file) {
+                    return $file->getBaseName();
+                });
+
             $files = Storage::disk("local")->allFiles("files");
             $logs = Storage::disk("public")->get(Printing::$discPathName . "/" . $printing->folder . "/logs/logs.txt");
         }catch (\Exception $e){
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
 
-        arsort($documents);
+
         return view("printings.edit", [
             "printing" => $printing,
             "documents" => $documents,
