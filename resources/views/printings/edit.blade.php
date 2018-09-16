@@ -93,6 +93,11 @@
     </div>
     <script>
         $( document ).ready(function() {
+            $(".typeahead").on("keyup", function () {
+                $(this).val($(this).val().replace(/\//g,''))
+            })
+
+
             $('.typeahead').typeahead({
                 items: 100,
                 source: [
