@@ -54,7 +54,7 @@
                                     @foreach($documents as $key => $document)
                                         <tr>
                                             <th scope="row">{{$key}}</th>
-                                            <td>{{$document}}</td>
+                                            <td>{{basename($document)}}</td>
                                             <td><a class="btn btn-primary btn-sm" href="{{asset("storage/".$document)}}" target="_blank">Show</a></td>
                                             <td>
                                                 <form method="POST" action="{{route("printings.deletefile", $printing->id)}}">
