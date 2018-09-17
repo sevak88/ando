@@ -58,11 +58,11 @@
                                         <tr>
                                             <th scope="row">{{$cntr--}}</th>
                                             <td>{{basename($document)}}</td>
-                                            <td><a class="btn btn-primary btn-sm" href="{{asset("storage/".$document)}}" target="_blank">Show</a></td>
+                                            <td><a class="btn btn-primary btn-sm" href="{{asset("storage/".\App\Printing::$discPathName."/".$printing->folder . "/".$document)}}" target="_blank">Show</a></td>
                                             <td>
                                                 <form method="POST" action="{{route("printings.deletefile", $printing->id)}}">
                                                     @csrf()
-                                                    <input name="file" value="{{$document}}" type="hidden">
+                                                    <input name="file" value="{{$printing->folder . "/".$document}}" type="hidden">
                                                     <button onclick="return confirm('Delete file?')" type="submit" class="btn btn-danger btn-sm" href="{{route("printings.edit", $printing->id)}}">Delete</button>
                                                 </form>
                                             </td>

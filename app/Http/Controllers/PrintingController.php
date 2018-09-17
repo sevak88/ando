@@ -188,7 +188,7 @@ class PrintingController extends Controller
 
         try{
 
-            Storage::disk('public')->delete($request->get("file"));
+            Storage::disk('public')->delete(Printing::$discPathName . "/".$request->get("file"));
         }catch (\Exception $e){
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
