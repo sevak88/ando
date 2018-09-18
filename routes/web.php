@@ -15,6 +15,11 @@ Route::get('/', [
     "uses" => "PrintingController@index"
 ]);
 
+Route::get('/print/{printing}/{width}/{height}', [
+    "as" => "print",
+    "uses" => "PrintingController@printing"
+]);
+
 Auth::routes();
 
 

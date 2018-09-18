@@ -31,6 +31,7 @@
                                     <th scope="col">User</th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
+                                    <th scope="col"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -41,12 +42,25 @@
                                         <td>{{$printing->user->name}}</td>
                                         <td><a class="btn btn-primary btn-sm" href="{{route("printings.edit", $printing->id)}}">Edit</a></td>
                                         <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Print
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="{{route("print", [$printing->id, 175,175])}}">175x175</a>
+                                                    <a class="dropdown-item" href="{{route("print", [$printing->id, 235,235])}}">235x235</a>
+                                                    <a class="dropdown-item" href="{{route("print", [$printing->id, 350,310])}}">350x310</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
                                             <form method="POST" action="{{route("printings.destroy", $printing->id)}}">
                                                 @csrf()
                                                 @method("DELETE")
                                                 <button onclick="return confirm('Delete files?')" type="submit" class="btn btn-danger btn-sm" href="{{route("printings.edit", $printing->id)}}">Delete</button>
                                             </form>
                                         </td>
+
                                     </tr>
                                 @endforeach
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Printing;
 use App\User;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -193,5 +194,34 @@ class PrintingController extends Controller
             return redirect()->back()->withErrors([$e->getMessage()]);
         }
         return redirect()->back()->with("message", "File success deleted");
+    }
+
+    public function printing($id, $width, $height){
+
+        $printing = Printing::findOrFail($id);
+
+
+        $documents = collect(File::allFiles(storage_path("app/public/prints/".$printing->folder)))->filter(function ($file) {
+            return in_array($file->getExtension(), ['png', 'gif', 'jpg', 'jpeg']);
+        })
+        ->sortBy(function ($file) {
+            return $file->getCTime();
+        },null, true)
+        ;
+
+       // dd($documents);
+
+        $pdf = PDF::loadView('print', [
+            "documents" => $documents,
+            "width" => $width,
+            "height" => $height
+        ]);
+
+        return $pdf->stream();
+
+        dump($printing);
+        dump($id);
+        dump($width);
+        dump($height);
     }
 }
