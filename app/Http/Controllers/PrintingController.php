@@ -207,9 +207,10 @@ class PrintingController extends Controller
         ->sortBy(function ($file) {
             return $file->getCTime();
         },null, true)
-        ;
+        ->map(function ($file) use ($printing){
+            return "storage/".Printing::$discPathName . "/".$printing->folder . "/". $file->getBaseName();
+        });
 
-       // dd($documents);
 
         $pdf = PDF::loadView('print', [
             "documents" => $documents,
